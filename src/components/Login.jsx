@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { TextInput, SafeAreaView, StyleSheet, Alert, Text, View, Button, Image} from "react-native";
-import imgPoke from "../img/pokemonlogo.png"
+import { TextInput, StyleSheet, Alert, Text, View, Button, Image, ImageBackground} from "react-native";
+  import imgHP from "../img/imgHP.png";
 import MyButton from "./MyButton";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#F67E4A",
+    backgroundColor: "#742E2E",
     alignItems: "center",
     justifyContent: "center",
+    minWidth: 50,
+    color: "#fff"
   },
   title: {
+    color: "#fff",
     fontSize: 26,
     marginBottom: 20,
     marginTop: 10,
@@ -21,12 +23,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: 50,
     fontSize: 18,
-    marginBottom: 25,
+    marginBottom: 25
   },
   image: {
     width:"100%",
     height:"18%",
     resizeMode:"contain",
+  },
+  hp: {
+    width:"100%",
+    height:"100%"
   }
 });
 
@@ -47,10 +53,15 @@ const Login = ({navigation}) => {
   
   return (
     <View style={styles.container}>
-       <Image source={imgPoke} 
-       style={styles.image} 
-       />
-      <Text style={styles.title}>Login</Text>
+        <ImageBackground style={styles.hp}
+        source={imgHP}
+        >
+     <View style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex:1
+     }}>
+     <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -64,7 +75,9 @@ const Login = ({navigation}) => {
         onChangeText={text => setPassword(text)}
         value={password}
       />
-      <Button title="Login" onPress={handleLogin} />
+      <MyButton title="Login" onPress={handleLogin} />
+     </View>
+     </ImageBackground>
     </View>
   );
 };

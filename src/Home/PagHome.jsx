@@ -1,80 +1,113 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FlatList, SafeAreaView, Text, View, StyleSheet, Image } from "react-native";
+import { FlatList, SafeAreaView, Text, View, StyleSheet, Image, ImageBackground } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import imgHP from "../img/imgHP.png";
 
 const PagHome = () => {
   const styles = StyleSheet.create({
-    pokemonContainer: {
+    characterContainer: {
       padding: 24,
       backgroundColor: "#fff",
       margin: 16,
-      borderRadius: 20,
+      borderRadius: 30,
       flexDirection: "row",
       alignItems: "center",
     },
     container: {
-      backgroundColor: "#CE6D11",
       flex: 1,
     },
     text: {
       color: "#000",
       fontSize: 16,
       marginLeft: 10,
+      fontWeight: "bold"
     },
     image: {
-      width: 50,
-      height: 50,
+      width: 120,
+      height: 120,
+      borderRadius: 10
+    },
+    hp: {
+      width: "100%",
+      height: "100%",
+    },
+    imagePlaceholder: {
+      width: 100,
+      height: 100,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "#ccc", 
+    },
+    placeholderText: {
+      color: "#000",
+      fontSize: 12,
     },
   });
 
-  const [pokemon, setPokemon] = useState([]);
+  const [harryPotter, setHarryPotter] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const fetchPokemon = async () => {
+  const fetchCharacters = async () => {
     try {
-      const { data } = await axios.get("https://pokeapi.co/api/v2/pokemon/");
-      setPokemon(data.results);
+      const { data } = await axios.get("https://hp-api.onrender.com/api/characters", {
+        params: {
+          limit: 20,
+        },
+      });
+      setHarryPotter(data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchPokemon();
+    fetchCharacters();
   }, []);
 
-  const PokemonItem = ({ data }) => {
-    const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getPokemonIdFromUrl(data.url)}.png`;
-  
-    let types = "";
-    if (data.types && data.types.length > 0) {
-      types = data.types.map(typeObj => typeObj.type.name).join(", ");
-    }
-  
+  const CharacterItem = ({ data }) => {
+    const imageUrl = data.image || ""; 
+
     return (
-      <View style={styles.pokemonContainer}>
-        <Image source={{ uri: imageUrl }} style={styles.image} />
+      <View style={styles.characterContainer}>
+        {imageUrl ? (
+          <Image source={{ uri: imageUrl }} style={styles.image} />
+        ) : (
+          <View style={styles.imagePlaceholder}>
+            <Text style={styles.placeholderText}>Imagem não disponível</Text>
+          </View>
+        )}
         <View>
-          <Text style={styles.text}>Name: {data.name}</Text>
-          <Text style={styles.text}>Type: {types}</Text>
+          <Text style={styles.text}>Name: {data.name || "Nome não disponível"}</Text>
+          <Text style={styles.text}>Actor: {data.actor || "Ator não disponível"}</Text>
         </View>
       </View>
     );
   };
 
-  const getPokemonIdFromUrl = (url) => {
-    const segments = url.split("/");
-    return segments[segments.length - 2];
-  };
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ImageBackground style={styles.hp} source={imgHP}>
+          <StatusBar />
+          <Text style={styles.placeholderText}>Carregando página home...</Text>
+        </ImageBackground>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar />
-      <FlatList 
-        data={pokemon} 
-        renderItem={({ item }) => <PokemonItem data={item} />} 
-        keyExtractor={(item) => item.name} 
-      />
+      <ImageBackground style={styles.hp} source={imgHP}>
+        <StatusBar />
+        <FlatList
+          data={harryPotter}
+          renderItem={({ item }) => <CharacterItem data={item} />}
+          keyExtractor={(item) => item.name}
+        />
+      </ImageBackground>
     </SafeAreaView>
   );
 };
