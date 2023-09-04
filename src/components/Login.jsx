@@ -5,7 +5,7 @@ import MyButton from "./MyButton";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#742E2E",
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
     minWidth: 50,

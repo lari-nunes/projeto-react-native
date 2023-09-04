@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FlatList, SafeAreaView, Text, View, StyleSheet, Image, ImageBackground } from "react-native";
+import { FlatList, SafeAreaView, Text, View, StyleSheet, Image, ImageBackground, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import imgHP from "../img/imgHP.png";
 
@@ -43,29 +43,42 @@ const PagHome = () => {
       color: "#000",
       fontSize: 12,
     },
+    paginationContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 24,
+    },
+    paginationButton: {
+      backgroundColor: "#007AFF",
+      borderRadius: 8,
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+    },
+    paginationButtonText: {
+      color: "#fff",
+      fontWeight: "bold",
+    },
   });
 
   const [harryPotter, setHarryPotter] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const fetchCharacters = async () => {
+  const fetchCharacters = async (page) => {
     try {
-      const { data } = await axios.get("https://hp-api.onrender.com/api/characters", {
-        params: {
-          limit: 20,
-        },
-      });
+      const { data } = await axios.get(`https://hp-api.onrender.com/api/characters?limit=20&page=${page}`);
       setHarryPotter(data);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCharacters();
-  }, []);
+    fetchCharacters(currentPage);
+  }, [currentPage]);
 
   const CharacterItem = ({ data }) => {
     const imageUrl = data.image || ""; 
@@ -80,11 +93,21 @@ const PagHome = () => {
           </View>
         )}
         <View>
-          <Text style={styles.text}>Name: {data.name || "Nome não disponível"}</Text>
-          <Text style={styles.text}>Actor: {data.actor || "Ator não disponível"}</Text>
+          <Text style={styles.text}>Nome: {data.name || "Nome não disponível"}</Text>
+          <Text style={styles.text}>Ator: {data.actor || "Ator não disponível"}</Text>
         </View>
       </View>
     );
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   if (loading) {
@@ -107,6 +130,22 @@ const PagHome = () => {
           renderItem={({ item }) => <CharacterItem data={item} />}
           keyExtractor={(item) => item.name}
         />
+        <View style={styles.paginationContainer}>
+          <TouchableOpacity
+            style={styles.paginationButton}
+            onPress={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            <Text style={styles.paginationButtonText}>Anterior</Text>
+          </TouchableOpacity>
+          <Text style={styles.paginationText}>Página {currentPage}</Text>
+          <TouchableOpacity
+            style={styles.paginationButton}
+            onPress={handleNextPage}
+          >
+            <Text style={styles.paginationButtonText}>Próxima</Text>
+          </TouchableOpacity>
+        </View>
       </ImageBackground>
     </SafeAreaView>
   );
