@@ -3,8 +3,10 @@ import axios from "axios";
 import { FlatList, SafeAreaView, Text, View, StyleSheet, Image, ImageBackground, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import imgHP from "../img/imgHP.png";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const PagHome = () => {
+const PagHome = ({navigation}) => {
   const styles = StyleSheet.create({
     characterContainer: {
       padding: 24,
@@ -76,6 +78,10 @@ const PagHome = () => {
     }
   };
 
+  const handleCharacterPress = (character) => {
+    navigation.navigate("DetailsHarryPotter", { characterId: character});
+  };
+
   useEffect(() => {
     fetchCharacters(currentPage);
   }, [currentPage]);
@@ -92,6 +98,10 @@ const PagHome = () => {
             <Text style={styles.placeholderText}>Imagem não disponível</Text>
           </View>
         )}
+        {/* <TouchableOpacity
+          style={styles.characterContainer}
+          onPress={() => handleCharacterPress(data.characterId || "")}
+        ></TouchableOpacity> */}
         <View>
           <Text style={styles.text}>Nome: {data.name || "Nome não disponível"}</Text>
           <Text style={styles.text}>Ator: {data.actor || "Ator não disponível"}</Text>
