@@ -1,8 +1,7 @@
-// CharacterDetails.js
-
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, ImageBackground } from "react-native";
 import axios from "axios";
+import imgHP from "../img/imgHP.png";
 import { useRoute } from "@react-navigation/native";
 
 const DetailsHarryPotter = () => {
@@ -29,12 +28,19 @@ const DetailsHarryPotter = () => {
 
   const styles = StyleSheet.create({
     characterContainer: {
-      padding: 24,
+      padding: 40,
       backgroundColor: "#fff",
       margin: 16,
       borderRadius: 30,
       flexDirection: "row",
       alignItems: "center",
+      justifyContent: "center",
+      height: 500,
+    },
+    container: {
+      backgroundColor: "#4C1919 ",
+      width: "100%",
+      height: "100%",
     },
     text: {
       color: "#000",
@@ -43,8 +49,8 @@ const DetailsHarryPotter = () => {
       fontWeight: "bold",
     },
     image: {
-      width: 120,
-      height: 120,
+      width: 150,
+      height: 200,
       borderRadius: 10,
     },
   });
@@ -58,17 +64,22 @@ const DetailsHarryPotter = () => {
   }
 
   return (
-    <View style={styles.characterContainer}>
+    <View style={styles.container}>
+      <ImageBackground style={styles.hp} source={imgHP}>
+      <View style={styles.characterContainer}>
       {character.map((item) => (
         <>
           <Image source={{ uri: item.image }} style={styles.image} />
           <View>
             <Text style={styles.text}>Nome: {item.name}</Text>
             <Text style={styles.text}>Ator: {item.actor}</Text>
-            <Text>Adicione mais detalhes do personagem conforme necessário</Text>
+            <Text style={styles.text}>Casa: {item.house}</Text>
+            <Text style={styles.text}>Nascimento: {item.dateOfBirth}</Text>
           </View>
         </>
       ))}
+    </View>
+    </ImageBackground>
     </View>
   );
 };
