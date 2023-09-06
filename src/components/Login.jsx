@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { TextInput, StyleSheet, Alert, Text, View, Button, Image, ImageBackground} from "react-native";
-  import imgHP from "../img/imgHP.png";
+  import imgHP from "../img/imgHP44.png";
 import MyButton from "./MyButton";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
     minWidth: 50,
@@ -23,7 +22,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: 50,
     fontSize: 18,
-    marginBottom: 25
+    marginBottom: 25,
+    borderColor: "#fff",
+    backgroundColor: "#fff",
   },
   image: {
     width:"100%",
@@ -41,7 +42,7 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    if (email && password && email === "larissa@gmail.com" && password === "larissa123") {
+    if (email && password && email === "larissa@gmail.com" && password === "12345") {
       Alert.alert('Login bem-sucedido', 'Você fez login com sucesso!');
       return navigation.replace("PagHome"); 
     } else if (!email || !password) {
@@ -52,32 +53,34 @@ const Login = ({navigation}) => {
   };
   
   return (
-    <View style={styles.container}>
-        <ImageBackground style={styles.hp}
-        source={imgHP}
-        >
-     <View style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex:1
-     }}>
-     <Text style={styles.title}>Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={text => setEmail(text)}
-        value={email}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        onChangeText={text => setPassword(text)}
-        value={password}
-      />
-      <MyButton title="Login" onPress={handleLogin} />
-     </View>
-     </ImageBackground>
+    <View style={styles.tela}>
+      <View style={styles.container}>
+          <ImageBackground style={styles.hp}
+          source={imgHP}
+          >
+      <View style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          flex:1
+      }}>
+      <Text style={styles.title}>Login</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          onChangeText={text => setEmail(text)}
+          value={email}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry
+          onChangeText={text => setPassword(text)}
+          value={password}
+        />
+        <MyButton title="Login" onPress={handleLogin} />
+      </View>
+      </ImageBackground>
+      </View>
     </View>
   );
 };

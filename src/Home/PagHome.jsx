@@ -2,67 +2,66 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FlatList, SafeAreaView, Text, View, StyleSheet, Image, ImageBackground, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import imgHP from "../img/imgHP.png";
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import imgHP from "../img/imgHP100.png";
+
+const styles = StyleSheet.create({
+  characterContainer: {
+    padding: 24,
+    backgroundColor: "#fff",
+    margin: 16,
+    borderRadius: 30,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  container: {
+    flex: 1,
+  },
+  text: {
+    color: "#000",
+    fontSize: 16,
+    marginLeft: 10,
+    fontWeight: "bold"
+  },
+  image: {
+    width: 120,
+    height: 120,
+    borderRadius: 10
+  },
+  hp: {
+    width: "100%",
+    height: "100%",
+  },
+  imagePlaceholder: {
+    width: 100,
+    height: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ccc", 
+  },
+  placeholderText: {
+    color: "#000",
+    fontSize: 12,
+  },
+  paginationContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 24,
+  },
+  paginationButton: {
+    backgroundColor: "#007AFF",
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  paginationButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+});
+
 
 const PagHome = ({navigation}) => {
-  const styles = StyleSheet.create({
-    characterContainer: {
-      padding: 24,
-      backgroundColor: "#fff",
-      margin: 16,
-      borderRadius: 30,
-      flexDirection: "row",
-      alignItems: "center",
-    },
-    container: {
-      flex: 1,
-    },
-    text: {
-      color: "#000",
-      fontSize: 16,
-      marginLeft: 10,
-      fontWeight: "bold"
-    },
-    image: {
-      width: 120,
-      height: 120,
-      borderRadius: 10
-    },
-    hp: {
-      width: "100%",
-      height: "100%",
-    },
-    imagePlaceholder: {
-      width: 100,
-      height: 100,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "#ccc", 
-    },
-    placeholderText: {
-      color: "#000",
-      fontSize: 12,
-    },
-    paginationContainer: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      paddingHorizontal: 24,
-    },
-    paginationButton: {
-      backgroundColor: "#007AFF",
-      borderRadius: 8,
-      paddingVertical: 8,
-      paddingHorizontal: 16,
-    },
-    paginationButtonText: {
-      color: "#fff",
-      fontWeight: "bold",
-    },
-  });
-
   const [harryPotter, setHarryPotter] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
