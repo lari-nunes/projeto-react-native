@@ -78,10 +78,6 @@ const PagHome = ({navigation}) => {
     }
   };
 
-  const handleCharacterPress = (character) => {
-    navigation.navigate("DetailsHarryPotter", { characterId: character});
-  };
-
   useEffect(() => {
     fetchCharacters(currentPage);
   }, [currentPage]);
@@ -89,7 +85,13 @@ const PagHome = ({navigation}) => {
   const CharacterItem = ({ data }) => {
     const imageUrl = data.image || ""; 
 
+    const handleCharacterPress = () => {
+      const characterId = data.id
+      navigation.navigate("DetailsHarryPotter", {id: characterId});
+    };
+
     return (
+      <TouchableOpacity onPress={handleCharacterPress}>
       <View style={styles.characterContainer}>
         {imageUrl ? (
           <Image source={{ uri: imageUrl }} style={styles.image} />
@@ -98,15 +100,12 @@ const PagHome = ({navigation}) => {
             <Text style={styles.placeholderText}>Imagem não disponível</Text>
           </View>
         )}
-        {/* <TouchableOpacity
-          style={styles.characterContainer}
-          onPress={() => handleCharacterPress(data.characterId || "")}
-        ></TouchableOpacity> */}
         <View>
           <Text style={styles.text}>Nome: {data.name || "Nome não disponível"}</Text>
           <Text style={styles.text}>Ator: {data.actor || "Ator não disponível"}</Text>
         </View>
       </View>
+      </TouchableOpacity>
     );
   };
 

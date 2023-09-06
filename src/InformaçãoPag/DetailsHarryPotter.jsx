@@ -3,25 +3,29 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import axios from "axios";
+import { useRoute } from "@react-navigation/native";
 
-const DetailsHarryPotter = ({ route }) => {
-  const { characterId } = route.params;
-  const [character, setCharacter] = useState(null);
+const DetailsHarryPotter = () => {
+  const route = useRoute();
+  const {id} = route.params;
+  const [character, setCharacter] = useState([]);
+
+  const fetchCharacter = async () => {
+    try {
+      const response = await axios.get(
+        `https://hp-api.onrender.com/api/character/${id}`
+      );
+      setCharacter(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    const fetchCharacter = async () => {
-      try {
-        const response = await axios.get(
-          `https://hp-api.onrender.com/api/character/${characterId}`
-        );
-        setCharacter(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    fetchCharacter()
+  }, []);
 
-    fetchCharacter();
-  }, [characterId]);
+  console.log(character)
 
   const styles = StyleSheet.create({
     characterContainer: {
@@ -55,12 +59,16 @@ const DetailsHarryPotter = ({ route }) => {
 
   return (
     <View style={styles.characterContainer}>
-      <Image source={{ uri: character.image }} style={styles.image} />
-      <View>
-        <Text style={styles.text}>Nome: {character.name}</Text>
-        <Text style={styles.text}>Ator: {character.actor}</Text>
-        {/* Adicione mais detalhes do personagem conforme necessário */}
-      </View>
+      {character.map((item) => (
+        <>
+          <Image source={{ uri: item.image }} style={styles.image} />
+          <View>
+            <Text style={styles.text}>Nome: {item.name}</Text>
+            <Text style={styles.text}>Ator: {item.actor}</Text>
+            <Text>Adicione mais detalhes do personagem conforme necessário</Text>
+          </View>
+        </>
+      ))}
     </View>
   );
 };

@@ -13,9 +13,9 @@ const Stack = createStackNavigator();
   return (
     <NavigationContainer style={styles.container}>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="PagHome" component={PagHome} />
-        <Stack.Screen name="PagInfo" component={DetailsHarryPotter} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="DetailsHarryPotter" component={DetailsHarryPotter} />
       </Stack.Navigator>
     </NavigationContainer>
   );
