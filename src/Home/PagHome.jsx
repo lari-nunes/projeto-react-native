@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FlatList, SafeAreaView, Text, View, StyleSheet, Image, ImageBackground, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import imgHP from "../img/imgHP100.png";
+import imgHP from "../img/imgHP.png";
 
 const styles = StyleSheet.create({
   characterContainer: {

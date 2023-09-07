@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextInput, StyleSheet, Alert, Text, View, Button, Image, ImageBackground} from "react-native";
-  import imgHP from "../img/imgHP44.png";
+import imgHP from "../img/imgHP100.png";
 import MyButton from "./MyButton";
 
 const styles = StyleSheet.create({

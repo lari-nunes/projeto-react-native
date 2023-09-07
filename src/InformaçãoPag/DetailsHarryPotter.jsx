@@ -1,7 +1,7 @@
+import SplashScreen from 'react-native-splash-screen';
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, ImageBackground, ButtonGoBack, TouchableOpacity } from "react-native";
 import axios from "axios";
-import { Ionicons } from '@expo/vector-icons'
 import imgHP from "../img/imgHP44.png";
 import { useRoute } from "@react-navigation/native";
 
@@ -89,19 +89,6 @@ const DetailsHarryPotter = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.goBackButton}>
-          <Ionicons
-            name='chevron-back'
-            color="#000"
-            size={40}
-            style={{
-              backgroundColor: "#fff",
-              marginTop: 5,
-              marginLeft: 10,
-              borderRadius: 100
-            }}
-          />
-      </TouchableOpacity>
         <ImageBackground style={styles.hp} source={imgHP}>
         <View style={styles.characterContainer}>
           {character.map((item, index) => (
