@@ -44,7 +44,21 @@ const Login = ({navigation}) => {
   const handleLogin = () => {
     if (email && password && email === "larissa@gmail.com" && password === "12345") {
       Alert.alert('Login bem-sucedido', 'Você fez login com sucesso!');
-      return navigation.replace("PagHome"); 
+      Alert.alert(
+        "Escolha uma página para poder ir",
+        [
+          {
+            text: "Home",
+            onPress: () => navigation.navigate("PagHome")
+          },
+          {
+            text: "Página extra",
+            onPress: () => navigation.navigate("Pokemon")
+          },
+        ],
+        {cancelable: false}
+      )
+      // return navigation.replace("DrawerBar"); 
     } else if (!email || !password) {
       Alert.alert('Erro', 'Preencha todos os campos!');
     } else {

@@ -7,7 +7,7 @@ import imgHP from "../img/imgHP.png";
 const styles = StyleSheet.create({
   characterContainer: {
     padding: 24,
-    backgroundColor: "#fff",
+    backgroundColor: "#000",
     margin: 16,
     borderRadius: 30,
     flexDirection: "row",
