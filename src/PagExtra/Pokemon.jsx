@@ -8,7 +8,7 @@ const Pokemon = () => {
   const styles = StyleSheet.create({
     pokemonContainer: {
       padding: 24,
-      backgroundColor: "#fff",
+      backgroundColor: "#F0E68C",
       margin: 16,
       borderRadius: 30,
       flexDirection: "row",

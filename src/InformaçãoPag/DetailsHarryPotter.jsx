@@ -1,8 +1,8 @@
 import SplashScreen from 'react-native-splash-screen';
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, ImageBackground, ButtonGoBack, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, ImageBackground } from "react-native";
 import axios from "axios";
-import imgHP from "../img/imgHP44.png";
+import imgHP from "../img/fotoHP.png";
 import { useRoute } from "@react-navigation/native";
 
 const styles = StyleSheet.create({
@@ -17,12 +17,12 @@ const styles = StyleSheet.create({
     height: 150,
   },
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: "#000",
     width: "100%",
     height: "100%",
   },
   text: {
-    color: "#000",
+    color: "#fff",
     fontSize: 16,
     borderRadius: 10,
     fontWeight: "bold",
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   containerText: {
-    backgroundColor: "#fff",
+    backgroundColor: "#000",
     margin: 15,
     borderRadius: 10,
     padding: 10

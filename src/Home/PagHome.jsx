@@ -17,15 +17,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    color: "#000",
+    color: "#fff",
     fontSize: 16,
     marginLeft: 10,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   image: {
     width: 120,
     height: 120,
-    borderRadius: 10
+    borderRadius: 10,
   },
   hp: {
     width: "100%",
@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ccc", 
+    backgroundColor: "#fff",
+    borderRadius: 10,
   },
   placeholderText: {
     color: "#000",
@@ -49,27 +50,36 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   paginationButton: {
-    backgroundColor: "#007AFF",
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
   },
   paginationButtonText: {
+    color: "#000",
+    fontWeight: "bold",
+  },
+  paginationText: {
     color: "#fff",
     fontWeight: "bold",
   },
 });
 
-
-const PagHome = ({navigation}) => {
+const PagHome = ({ navigation }) => {
   const [harryPotter, setHarryPotter] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
   const fetchCharacters = async (page) => {
     try {
-      const { data } = await axios.get(`https://hp-api.onrender.com/api/characters?limit=20&page=${page}`);
-      setHarryPotter(data);
+      const { data } = await axios.get(
+        `https://hp-api.onrender.com/api/characters?limit=20&page=${page}`
+      );
+      if (page === 1) {
+        setHarryPotter(data);
+      } else {
+        setHarryPotter([...harryPotter, ...data]);
+      }
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -82,34 +92,40 @@ const PagHome = ({navigation}) => {
   }, [currentPage]);
 
   const CharacterItem = ({ data }) => {
-    const imageUrl = data.image || ""; 
+    const imageUrl = data.image || "";
 
     const handleCharacterPress = () => {
-      const characterId = data.id
-      navigation.navigate("DetailsHarryPotter", {id: characterId});
+      const characterId = data.id;
+      navigation.navigate("DetailsHarryPotter", { id: characterId });
     };
 
     return (
       <TouchableOpacity onPress={handleCharacterPress}>
-      <View style={styles.characterContainer}>
-        {imageUrl ? (
-          <Image source={{ uri: imageUrl }} style={styles.image} />
-        ) : (
-          <View style={styles.imagePlaceholder}>
-            <Text style={styles.placeholderText}>Imagem não disponível</Text>
+        <View style={styles.characterContainer}>
+          {imageUrl ? (
+            <Image source={{ uri: imageUrl }} style={styles.image} />
+          ) : (
+            <View style={styles.imagePlaceholder}>
+              <Text style={styles.placeholderText}>Imagem não disponível</Text>
+            </View>
+          )}
+          <View>
+            <Text style={styles.text}>
+              Nome: {data.name || "Nome não disponível"}
+            </Text>
+            <Text style={styles.text}>
+              Ator: {data.actor || "Ator não disponível"}
+            </Text>
           </View>
-        )}
-        <View>
-          <Text style={styles.text}>Nome: {data.name || "Nome não disponível"}</Text>
-          <Text style={styles.text}>Ator: {data.actor || "Ator não disponível"}</Text>
         </View>
-      </View>
       </TouchableOpacity>
     );
   };
 
   const handleNextPage = () => {
-    setCurrentPage(currentPage + 1);
+    if (harryPotter.length === 20) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
   const handlePrevPage = () => {
@@ -144,7 +160,7 @@ const PagHome = ({navigation}) => {
             onPress={handlePrevPage}
             disabled={currentPage === 1}
           >
-            <Text style={styles.paginationButtonText}>Anterior</Text>
+          <Text style={styles.paginationButtonText}>Anterior</Text>
           </TouchableOpacity>
           <Text style={styles.paginationText}>Página {currentPage}</Text>
           <TouchableOpacity

@@ -2,14 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import Login from './src/components/Login';
 import PagHome from './src/Home/PagHome';
-// import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import DetailsHarryPotter from './src/InformaçãoPag/DetailsHarryPotter';
 import Pokemon from './src/PagExtra/Pokemon';
 
 const Stack = createStackNavigator();
-// const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
@@ -24,17 +22,6 @@ export default function App() {
         <Stack.Screen name="DetailsHarryPotter" component={DetailsHarryPotter} />
         <Stack.Screen name="Pokemon" component={Pokemon} />
       </Stack.Navigator>
-
-      {/* <Drawer.Navigator screenOptions={{
-        headerShown: false,
-        drawerActiveBackgroundColor: "#e3c",
-        drawerActiveTintColor: "#000",
-        drawerInactiveBackgroundColor: "gray",
-        drawerInactiveTintColor: "#fff",
-      }}>
-        <Drawer.Screen name='PagHome' component={PagHome}/>
-        <Drawer.Screen name='Pokemon' component={Pokemon} />
-      </Drawer.Navigator> */}
     </NavigationContainer>
   );
 }

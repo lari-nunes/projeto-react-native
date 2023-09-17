@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import { TextInput, StyleSheet, Alert, Text, View, Button, Image, ImageBackground} from "react-native";
-import imgHP from "../img/imgHP100.png";
+import { TextInput, StyleSheet, Alert, Text, View, ImageBackground, Image } from "react-native";
+import imgHP from "../img/imgHP00.png";
+
 import MyButton from "./MyButton";
 
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    minWidth: 50,
-    color: "#fff"
+    flex: 1, 
   },
   title: {
     color: "#fff",
     fontSize: 26,
     marginBottom: 20,
     marginTop: 10,
+    fontWeight: "bold"
   },
   input: {
     borderWidth: 1.5,
@@ -25,76 +26,62 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     borderColor: "#fff",
     backgroundColor: "#fff",
+    paddingHorizontal: 10, 
   },
   image: {
-    width:"100%",
-    height:"18%",
-    resizeMode:"contain",
+  
   },
   hp: {
-    width:"100%",
-    height:"100%"
+    width: "100%",
+    height: "100%",
+    flex: 1, 
   }
 });
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    if (email && password && email === "larissa@gmail.com" && password === "12345") {
-      Alert.alert('Login bem-sucedido', 'Você fez login com sucesso!');
-      Alert.alert(
-        "Escolha uma página para poder ir",
-        [
-          {
-            text: "Home",
-            onPress: () => navigation.navigate("PagHome")
-          },
-          {
-            text: "Página extra",
-            onPress: () => navigation.navigate("Pokemon")
-          },
-        ],
-        {cancelable: false}
-      )
-      // return navigation.replace("DrawerBar"); 
+    if (email && password && email === "teste@gmail.com" && password === "teste123") {
+      Alert.alert('Login bem-sucedido', 'Para qual página você deseja ir?', [
+        {
+          text: "Home",
+          onPress: () => navigation.navigate("PagHome"),
+        },
+        {
+          text: "Página extra",
+          onPress: () => navigation.navigate("Pokemon"),
+        },
+      ]);
     } else if (!email || !password) {
       Alert.alert('Erro', 'Preencha todos os campos!');
     } else {
       Alert.alert('Erro', 'Login incorreto!');
     }
   };
-  
+
   return (
-    <View style={styles.tela}>
-      <View style={styles.container}>
-          <ImageBackground style={styles.hp}
-          source={imgHP}
-          >
-      <View style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          flex:1
-      }}>
-      <Text style={styles.title}>Login</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          onChangeText={text => setEmail(text)}
-          value={email}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          secureTextEntry
-          onChangeText={text => setPassword(text)}
-          value={password}
-        />
-        <MyButton title="Login" onPress={handleLogin} />
-      </View>
+    <View style={styles.container}>
+      <ImageBackground style={styles.hp} source={imgHP}>
+        <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+          <Text style={styles.title}>Login</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            onChangeText={text => setEmail(text)}
+            value={email}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            secureTextEntry
+            onChangeText={text => setPassword(text)}
+            value={password}
+          />
+          <MyButton title="Login" onPress={handleLogin} />
+        </View>
       </ImageBackground>
-      </View>
     </View>
   );
 };
